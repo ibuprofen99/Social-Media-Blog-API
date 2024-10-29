@@ -1,6 +1,8 @@
 import Controller.SocialMediaController;
+import Util.ConnectionUtil;
 import io.javalin.Javalin;
-
+import DAO.AccountDAO;
+import Model.Account;
 /**
  * This class is provided with a main method to allow you to manually run and test your application. This class will not
  * affect your program in any way and you may write whatever code you like here.
@@ -8,7 +10,16 @@ import io.javalin.Javalin;
 public class Main {
     public static void main(String[] args) {
         SocialMediaController controller = new SocialMediaController();
+        ConnectionUtil.resetTestDatabase();
+
         Javalin app = controller.startAPI();
         app.start(8080);
+        Account account = new Account();
+        account.setUsername("testy1");
+        account.setPassword("oass");
+        AccountDAO accountDAO = new AccountDAO();
+
+        System.out.println(accountDAO.createAccount(account) );
+        
     }
 }
